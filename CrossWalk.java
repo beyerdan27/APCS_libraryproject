@@ -2,6 +2,7 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+
 public class CrossWalk{
 	public static void main(String args[]){
 		List<Integer> file1data;
@@ -27,7 +28,7 @@ public class CrossWalk{
 			File file2 = new File("libdata.csv");
 			Scanner reader2 = new Scanner(file2);
 			while(reader2.hasNextLine()){
-				temp.add(reader2.nextLine());
+				temp.add(reader2.next());
                 //int data = (int) reader2.nextDouble();
 				//file2data.add(data);
 			}
@@ -43,17 +44,26 @@ public class CrossWalk{
 	}
 	*/
 	
-	for(String s:temp){
+	/*for(String s:temp){
 		System.out.println(s);
 	}
-	for(int datatwo:file2data){
-		System.out.println(datatwo);
+	*/
+	for(String s:temp){
+		try{
+		file2data.add(Integer.parseInt(s));
+		}
+		catch(NumberFormatException e){
+			continue;
+		}
 	}
+	/*for(int datatwo:file2data){
+		System.out.println(datatwo);
+	}*/
 	List<Integer> matches;
 	matches = new ArrayList<Integer>();
 	for(int a:file1data){
 		for(int b:file2data){
-			if(a==b) matches.add(a);
+			if(matches.indexOf(a)<0&&a==b) matches.add(a);
 		}
 	}
 	System.out.println(matches.size() + " matches found.");
