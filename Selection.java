@@ -2,11 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-public class Insertion{
+public class Selection{
 	public static ArrayList<Integer> arr = new ArrayList<Integer>();
 	public static int temp=0;
-	public static int j;
-	public static int comparisons;
+	public static int comparisons; //only comparisons of array elements will count - not iterator variables in, say, a for loop
 	public static int swaps; //I AM ASSUMING one "move" == one "swap" - this is consistent across my programs so it shouldnt matter
 	public static void main(String[] args){
 		try{
@@ -21,15 +20,20 @@ public class Insertion{
 		catch(FileNotFoundException e){
 			System.out.println("File not found.");
 		}
-		for(int i=1; i<arr.size(); i++){ //sorting portion (iterating through elements)
-			j=i;
-			comparisons++; //COMPARISON BELOW - accounts for first comparion
-			while(j>0&&arr.get(j-1)>arr.get(j)){ //COMPARISON ||| this portion loops to move elements to correct position
-				comparisons++; //accounts for next comparison which WILL happen
-				swaps++; //SWAP BELOW
-				swap(j, j-1); //SWAP
-				j-=1;
-			}
+		for(int i=0; i<arr.size(); i++){ //sorting portion (iterating through elements)
+            //finding next smallest elements at beginning of each iterasion
+            int smallest=-1;
+            int smallestIndex=-1;
+            for(int j=i; j<arr.size(); j++){ //second loop finds smallest remaining element
+                comparisons++; //comparison BELOW
+                if(arr.get(j)<smallest||smallest==-1){
+                    smallest = arr.get(j);
+                    smallestIndex=j;
+                }
+            }
+            //swapping current iteration index with next smallest
+            swaps++; //SWAP BELOW
+            swap(i, smallestIndex);
 		}
 		for(int thing:arr) System.out.println(thing); //printing out results VVV x2
 		System.out.println(comparisons + " COMPARISONS");
